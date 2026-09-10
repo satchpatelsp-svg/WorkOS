@@ -1,0 +1,16 @@
+{
+  "name": "@workspace/request-context",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --build"
+  },
+  "dependencies": {
+    "@workspace/domain": "workspace:*",
+    "zod": "catalog:"
+  }
+}

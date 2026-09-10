@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Work OS"
+description = "A secure, multi-tenant operating workspace foundation for shared Director, EA, and AI work state, with a compact warm application shell and Stage A context controls."
+version = "1.0.0"
+id = "artifacts/work-os"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21490
+
+[services.development]
+run = "pnpm --filter @workspace/work-os run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/work-os", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/work-os/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21490"
+BASE_PATH = "/"

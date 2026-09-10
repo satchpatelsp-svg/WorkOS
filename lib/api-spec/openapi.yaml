@@ -1,0 +1,142 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: foundation
+    description: Stage A secure-foundation status
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /foundation:
+    get:
+      operationId: getFoundationSummary
+      tags: [foundation]
+      summary: Stage A foundation summary
+      description: Returns non-sensitive seed and readiness data for the Stage A application shell.
+      responses:
+        "200":
+          description: Foundation summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FoundationSummary"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    FoundationSummary:
+      type: object
+      required:
+        - product
+        - stage
+        - mode
+        - tenant
+        - workspace
+        - principal
+        - security
+        - workItems
+        - recentActivity
+      properties:
+        product:
+          type: string
+        stage:
+          type: string
+        mode:
+          type: string
+          enum: [foundation-preview]
+        tenant:
+          $ref: "#/components/schemas/ContextLabel"
+        workspace:
+          $ref: "#/components/schemas/ContextLabel"
+        principal:
+          $ref: "#/components/schemas/ContextLabel"
+        security:
+          type: array
+          items:
+            $ref: "#/components/schemas/SecurityControl"
+        workItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkItemSummary"
+        recentActivity:
+          type: array
+          items:
+            $ref: "#/components/schemas/ActivitySummary"
+    ContextLabel:
+      type: object
+      required: [id, name, kind]
+      properties:
+        id:
+          type: string
+          pattern: "^[0-9a-fA-F-]{36}$"
+        name:
+          type: string
+        kind:
+          type: string
+    SecurityControl:
+      type: object
+      required: [name, status, detail]
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum: [ready, gated, pending]
+        detail:
+          type: string
+    WorkItemSummary:
+      type: object
+      required: [id, title, status, owner, dueLabel, priority]
+      properties:
+        id:
+          type: string
+          pattern: "^[0-9a-fA-F-]{36}$"
+        title:
+          type: string
+        status:
+          type: string
+        owner:
+          type: string
+        dueLabel:
+          type: string
+        priority:
+          type: string
+    ActivitySummary:
+      type: object
+      required: [id, label, actor, occurredAt]
+      properties:
+        id:
+          type: string
+          pattern: "^[0-9a-fA-F-]{36}$"
+        label:
+          type: string
+        actor:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+

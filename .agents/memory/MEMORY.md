@@ -1,0 +1,1 @@
+- [Forced RLS security definers](rls-security-definer.md) — narrow no-login bypass role powers policy helpers; runtime and worker roles never bypass RLS.

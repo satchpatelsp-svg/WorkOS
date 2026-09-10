@@ -1,0 +1,31 @@
+{
+  "name": "@workspace/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./worker": "./src/worker.ts",
+    "./schema": "./src/schema/index.ts"
+  },
+  "scripts": {
+    "migrate": "node ./scripts/migrate.mjs",
+    "push": "drizzle-kit push --config ./drizzle.config.ts",
+    "push-force": "drizzle-kit push --force --config ./drizzle.config.ts",
+    "test:security": "node ./tests/stage-a-security.mjs",
+    "test:identity": "node ./tests/external-login-security.mjs",
+    "test:stage-a": "pnpm run test:security && pnpm run test:identity"
+  },
+  "dependencies": {
+    "@workspace/request-context": "workspace:*",
+    "drizzle-orm": "catalog:",
+    "drizzle-zod": "^0.8.3",
+    "pg": "^8.22.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/pg": "^8.20.0",
+    "drizzle-kit": "^0.31.10"
+  }
+}
