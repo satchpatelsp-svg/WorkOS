@@ -180,6 +180,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.5
+      tsx:
+        specifier: 'catalog:'
+        version: 4.23.1
 
   artifacts/api-server:
     dependencies:
