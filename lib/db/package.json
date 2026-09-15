@@ -14,6 +14,8 @@
     "push-force": "drizzle-kit push --force --config ./drizzle.config.ts",
     "test:security": "node ./tests/stage-a-security.mjs",
     "test:identity": "node ./tests/external-login-security.mjs",
+    "test:stage-a-migration-audit": "node ./tests/stage-a-migration-audit.mjs",
+    "test:stage-a-migration-audit:offline": "node --test ./tests/stage-a-migration-audit.test.mjs",
     "test:stage-a": "pnpm run test:security && pnpm run test:identity"
   },
   "dependencies": {
